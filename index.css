@@ -1,4 +1,21 @@
 /* index.css */
 h2 {
-  color: blue;
+  color: #A08F8F;
+}
+#user-input {
+  flex-grow:2;
+  padding:5px;
+  font-size: 1rem;
+  width:100%;
+}
+#score {
+  color: black;
+}
+
+body {
+  background-color: #E7D8D8;
+}
+#game {
+  margin-top: 10%;
+  background-color: #F1F1F1;
 }
