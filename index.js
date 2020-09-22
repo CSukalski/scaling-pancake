@@ -1,23 +1,49 @@
-// javascript
 $(document).ready(function(){
-var currentQuestion;
+  var currentQuestion;
+  var timeLeft = 10;
 
-var randomNumberGenerator = function (size) {
-  return Math.ceil(Math.random() * size);
-}
 
-var questionGenerator = function () {
-  var question = {};
-  var num1 = randomNumberGenerator(10);
-  var num2 = randomNumberGenerator(10);
+  var randomNumberGenerator = function (size) {
+    return Math.ceil(Math.random() * size);
+  }
 
-  question.answer = num1 + num2;
-  question.equation = String(num1) + "+" + String(num2);
+  var questionGenerator = function () {
+    var question = {};
+    var num1 = randomNumberGenerator(10);
+    var num2 = randomNumberGenerator(10);
 
-  return question;
-}
+    question.answer = num1 + num2;
+    question.equation = String(num1) + " + " + String(num2);
 
-currentQuestion = questionGenerator();
-$('#equation').text(currentQuestion.equation);
+    return question;
+  }
+
+  var renderNewQuestion = function () {
+    currentQuestion = questionGenerator();
+    $('#equation').text(currentQuestion.equation);
+  }
+
+  var checkAnswer = function (userInput, answer) {
+    if(userInput === answer) {
+      renderNewQuestion();
+      $('#user-input').val('');
+    }
+  }
+
+  $('#user-input').on('keyup', function () {
+    checkAnswer(Number($(this).val()), currentQuestion.answer);
+  });
+
+  renderNewQuestion();
+
+  var interval = setInterval(function () {
+    timeLeft--;
+    $('#time-left').text(timeLeft);
+    if (timeLeft === 0) {
+      clearInterval(interval);
+    }
+  }, 1000);
+
+
 
 });
