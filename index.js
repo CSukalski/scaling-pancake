@@ -3,6 +3,10 @@ $(document).ready(function(){
   var interval;
   var timeLeft = 10;
   var score = 0;
+  var range = document.getElementById('number-limit-range');
+  var result = document.getElementById('number-limit');
+
+
 
   var updateTimeLeft = function (amount) {
     timeLeft += amount;
@@ -29,21 +33,38 @@ $(document).ready(function(){
       }, 1000);
     }
   };
+  var getQuestionOptions = function() {
+    var options = [];
+    for (var key in $scope.questionOptions) {
+        if ($scope.questionOptions[key]) {
+            options.push(key)
+        }
+    }
+    return options
+}
+;
 
-  var randomNumberGenerator = function (size) {
-    return Math.ceil(Math.random() * size);
+  range.addEventListener('change', function () {
+    result.innerHTML = range.value;
+    var size = range.value;
+  }, false);
+
+
+  var randomNumberGenerator = function (range) {
+    return Math.ceil(Math.random() * range);
   };
 
   var questionGenerator = function () {
     var question = {};
-    var num1 = randomNumberGenerator(10);
-    var num2 = randomNumberGenerator(10);
+    var num1 = randomNumberGenerator(range.value);
+    var num2 = randomNumberGenerator(range.value);
 
     question.answer = num1 + num2;
     question.equation = String(num1) + " + " + String(num2);
 
     return question;
   };
+
 
   var renderNewQuestion = function () {
     currentQuestion = questionGenerator();
@@ -65,4 +86,6 @@ $(document).ready(function(){
   });
 
   renderNewQuestion();
+
+
 });
